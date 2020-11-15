@@ -1,7 +1,5 @@
 <?php
 
-require 'Config.php';
-
 class Connection 
 {
     private $driver = DRIVER_DATABASE;

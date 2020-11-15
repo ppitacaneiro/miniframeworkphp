@@ -18,7 +18,7 @@
                 <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="name@example.com" required>
             </div>
             <div class="form-group">
-                <label for="inputEmail">Nombre de Usuario</label>
+                <label for="inputNombre">Nombre de Usuario</label>
                 <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombre de usuario" required>
             </div>
             <div class="form-group">

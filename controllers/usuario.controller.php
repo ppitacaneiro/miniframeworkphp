@@ -1,6 +1,7 @@
 <?php
 
 require 'core/Controller.php';
+require 'models/Usuario.php';
 require 'core/interfaces/Crud.php';
 
 class UsuarioController extends Controller implements Crud
@@ -13,7 +14,18 @@ class UsuarioController extends Controller implements Crud
     }
 
     public function store() {
-        echo 'store';
+
+        $usuario = new Usuario();
+        $usuario->user = $_POST['inputNombre'];
+
+        $data = array
+        (
+            'user' => $usuario->user,
+            'password' => password_hash($_POST['inputPassword'],PASSWORD_DEFAULT),
+            'email' => $_POST['inputEmail']
+        );
+
+        $usuario->insert($data);
     }
 
     public function update() {
