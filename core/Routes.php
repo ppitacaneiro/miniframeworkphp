@@ -1,15 +1,14 @@
 <?php
 require 'controllers/usuario.controller.php';
+require 'core/Config.php';
 
 $controllers = array
 (
     'usuario' => 
     [
         'index',
-        'login',
-        'register',
-        'update',
-        'delete'
+        'create',
+        'store'
     ]
 );
 
@@ -17,13 +16,21 @@ if (array_key_exists($controller,$controllers))
 {
     if (in_array($action,$controllers[$controller]))
     {
-        call($controller,$action);
+        callController($controller,$action);
+    }
+    else
+    {
+        die(ERROR_ACTIONS . $action);    
     }
 }
-
-function call($controller,$action) 
+else
 {
-    require_once('controllers/' . $controller . '.controller.php');
+    die(ERROR_CONTROLLER . $controller);
+}
+
+function callController($controller,$action) 
+{
+    require_once(PATH_CONTROLLERS . '/' . $controller . '.controller.php');
     switch ($controller)
     {
         case 'usuario' :

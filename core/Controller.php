@@ -1,6 +1,6 @@
 <?php
 
-class Controller 
+abstract class Controller 
 {
     private $view;
 
@@ -11,7 +11,17 @@ class Controller
 
     public function index() 
     {
-        require 'views/' . $this->view . '/index.php';
+        require PATH_VIEWS . '/' . $this->view . '/index.php';
+    }
+
+    public function create()
+    {
+        require PATH_VIEWS . '/' . $this->view . '/create.php';
+    }
+
+    public function edit()
+    {
+        require PATH_VIEWS . '/' . $this->view . '/edit.php';
     }
 }
 
