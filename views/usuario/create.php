@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creación de Usuarios</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container mt-5">
         <h3>Creación de Usuario</h3>
@@ -35,5 +33,4 @@
         </form>
     </div>
 </body>
-
 </html>
