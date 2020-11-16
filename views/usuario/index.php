@@ -18,7 +18,7 @@
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <div class="checkbox mb-3">
                 <label>
-                    <a href="index.php?controller=usuario&action=create">Registro de usuario</a>
+                    <a href="<?= $urlCreateUser ?>">Registro de usuario</a>
                 </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>

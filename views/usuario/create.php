@@ -12,7 +12,7 @@
     <div class="container mt-5">
         <h3>Creación de Usuario</h3>
         <hr>
-        <form method="POST" action="index.php?controller=usuario&action=store">
+        <form method="POST" action="index.php?controller=usuario&action=save">
             <div class="form-group">
                 <label for="inputEmail">Dirección de email</label>
                 <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="name@example.com" required>

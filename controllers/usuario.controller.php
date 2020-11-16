@@ -1,7 +1,6 @@
 <?php
 
 require 'core/Controller.php';
-require 'models/Usuario.php';
 require 'core/interfaces/Crud.php';
 
 class UsuarioController extends Controller implements Crud
@@ -13,8 +12,23 @@ class UsuarioController extends Controller implements Crud
         parent::__construct(self::FOLDER_VIEW);
     }
 
-    public function store() {
+    public function index()
+    {
+        $dataToRenderInView = array
+        (
+            'urlCreateUser' => View::generateUrl('usuario','create')
+        );
 
+        $this->render('index',$dataToRenderInView);
+    }
+    
+    public function create() 
+    {
+        $this->render('create');
+    }
+    
+    public function save()
+    {
         $usuario = new Usuario();
         $usuario->user = $_POST['inputNombre'];
 
@@ -27,12 +41,19 @@ class UsuarioController extends Controller implements Crud
 
         $usuario->insert($data);
     }
-
-    public function update() {
+    
+    public function edit()
+    {
 
     }
 
-    public function delete() {
+    public function update()
+    {
+
+    }
+    
+    public function delete()
+    {
 
     }
 

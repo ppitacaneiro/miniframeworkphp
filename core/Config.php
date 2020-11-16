@@ -15,6 +15,7 @@ define("HOST","localhost");
 */
 define("PATH_CONTROLLERS","controllers");
 define("PATH_VIEWS","views");
+define("PATH_MODELS","models");
 
 /*
 * Error messages

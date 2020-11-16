@@ -8,7 +8,7 @@ $controllers = array
     [
         'index',
         'create',
-        'store'
+        'save'
     ]
 );
 
@@ -31,12 +31,8 @@ else
 function callController($controller,$action) 
 {
     require_once(PATH_CONTROLLERS . '/' . $controller . '.controller.php');
-    switch ($controller)
-    {
-        case 'usuario' :
-            $controller = new UsuarioController();
-        break;
-    }
+    $controllerClassName = ucwords($controller) . 'Controller';
+    $controller = new $controllerClassName();
     $controller->{$action}();
 }
 

@@ -1,4 +1,5 @@
 <?php
+require 'core/helpers/View.php';
 
 abstract class Controller 
 {
@@ -7,21 +8,26 @@ abstract class Controller
     public function __construct($view)
     {
         $this->view = $view;
+
+        foreach(glob(PATH_MODELS . "/*.php") as $file)
+        {
+            require_once $file;
+        }
     }
 
-    public function index() 
+    public function render($file,$data = array())
     {
-        require PATH_VIEWS . '/' . $this->view . '/index.php';
+        foreach ($data as $key => $value) 
+        {
+            ${$key} = $value;
+        }
+
+        require PATH_VIEWS . '/' . $this->view . '/' . $file . '.php';
     }
 
-    public function create()
+    public function redirect($controller,$action)
     {
-        require PATH_VIEWS . '/' . $this->view . '/create.php';
-    }
-
-    public function edit()
-    {
-        require PATH_VIEWS . '/' . $this->view . '/edit.php';
+        header("Location:index.php?controller=" . $controller . "&action=" . $action);
     }
 }
 
