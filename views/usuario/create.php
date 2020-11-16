@@ -10,10 +10,10 @@
     <div class="container mt-5">
         <h3>Creación de Usuario</h3>
         <hr>
-        <form method="POST" action="index.php?controller=usuario&action=save">
+        <form method="POST" action="<?= $urlSaveUser ?>">
             <div class="form-group">
                 <label for="inputEmail">Dirección de email</label>
-                <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="name@example.com" required>
+                <input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="name@example.com">
             </div>
             <div class="form-group">
                 <label for="inputNombre">Nombre de Usuario</label>

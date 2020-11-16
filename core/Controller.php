@@ -1,5 +1,6 @@
 <?php
 require 'core/helpers/View.php';
+require 'core/helpers/Validator.php';
 
 abstract class Controller 
 {

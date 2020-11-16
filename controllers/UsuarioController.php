@@ -22,21 +22,31 @@ class UsuarioController extends Controller implements Crud
         $this->render('index',$dataToRenderInView);
     }
     
-    public function create() 
+    public function create()
     {
-        $this->render('create');
+        $dataToRenderInView = array
+        (
+            'urlSaveUser' => View::generateUrl('usuario','save')
+        );
+
+        $this->render('create',$dataToRenderInView);
     }
     
     public function save()
     {
         $usuario = new Usuario();
         $usuario->user = $_POST['inputNombre'];
+        $usuario->email = $_POST['inputEmail'];
+        $usuario->password = $_POST['inputPassword'];
+
+        echo Validator::validate($usuario->email,'email','email no valido');
+        die();
 
         $data = array
         (
             'user' => $usuario->user,
-            'password' => password_hash($_POST['inputPassword'],PASSWORD_DEFAULT),
-            'email' => $_POST['inputEmail']
+            'password' => password_hash($usuario->password,PASSWORD_DEFAULT),
+            'email' => $usuario->email
         );
 
         $usuario->insert($data);
