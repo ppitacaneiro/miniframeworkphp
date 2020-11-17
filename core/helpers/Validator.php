@@ -1,37 +1,82 @@
 <?php 
 
-class Validator
+class Validator 
 {
-    private static $validationsAvaliables = array
-    (
-        'email' => 'isEmailValid',
-        'name' => 'isNameValid'
-    );
+    private $errors = array();
 
-    public static function validate($input,$type,$message)
+    public function validate($data)
     {
-        foreach (self::$validationsAvaliables as $key => $method)
+        foreach ($data as $type => $value)
         {
-            if ($type == $key)
+            switch ($type)
             {
-                if (!self::$method($input))
-                {
-                    return $message;
-                }
-                
-                return false;
+                case 'required':
+                    if (empty($value))
+                    {
+                        $this->setErrors(VALIDATOR_REQUIRED);
+                    }
+                break;
+                case 'email':
+                    if (empty($value) || !$this->isValidEmail($value))
+                    {
+                        $this->setErrors(VALIDATOR_EMAIL);
+                    }
+                break;
+                case 'password':
+                    if (empty($value) || !$this->isValidPassword($value))
+                    {
+                        $this->setErrors(VALIDATOR_PASSWORD);
+                    }
+                break;
             }
         }
     }
 
-    private static function isEmailValid($email)
+    public function printErrors()
+    {
+        $errors = "<ul>";
+        foreach ($this->getErrors() as $error)
+        {
+            
+            $errors .= "<li>" . $error . "</li>";
+        }
+        $errors .= "</ul>";
+
+        return $errors;
+    }
+
+    public function isValid()
+    {
+        return count($this->getErrors()) == 0;
+    }
+
+    private function setErrors($error)
+    {
+        array_push($this->errors,$error);
+    }
+
+    private function getErrors()
+    {
+        return $this->errors;
+    }
+
+    private function isValidEmail($email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-    private static function isNameValid($name)
+    private function isValidPassword($password)
     {
-        return preg_match("/^[a-zA-Z-' ]*$/",$name);
+        $uppercase = preg_match('@[A-Z]@',$password);
+        $lowercase = preg_match('@[a-z]@',$password);
+        $number = preg_match('@[0-9]@',$password);
+
+        if (!$uppercase || !$lowercase || !$number || strlen($password) < 8)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
 

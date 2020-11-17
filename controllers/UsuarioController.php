@@ -24,12 +24,13 @@ class UsuarioController extends Controller implements Crud
     
     public function create()
     {
-        $dataToRenderInView = array
+        $dataToRender = array
         (
+            'errors' => '',
             'urlSaveUser' => View::generateUrl('usuario','save')
         );
 
-        $this->render('create',$dataToRenderInView);
+        $this->render('create',$dataToRender);
     }
     
     public function save()
@@ -39,17 +40,40 @@ class UsuarioController extends Controller implements Crud
         $usuario->email = $_POST['inputEmail'];
         $usuario->password = $_POST['inputPassword'];
 
-        echo Validator::validate($usuario->email,'email','email no valido');
-        die();
-
-        $data = array
+        $dataToValidate = array
         (
-            'user' => $usuario->user,
-            'password' => password_hash($usuario->password,PASSWORD_DEFAULT),
-            'email' => $usuario->email
+            'email' => $usuario->email,
+            'required' => $usuario->user,
+            'password' => $usuario->password
         );
 
-        $usuario->insert($data);
+        $errors = "";
+        $validator = new Validator();
+        $validator->validate($dataToValidate);
+
+        if ($validator->isValid())
+        {
+            $data = array
+            (
+                'user' => $usuario->user,
+                'password' => password_hash($usuario->password,PASSWORD_DEFAULT),
+                'email' => $usuario->email
+            );
+    
+            $usuario->insert($data);
+        }
+        else
+        {
+            $errors = $validator->printErrors();
+        }
+
+        $dataToRender = array
+        (
+            'errors' => $errors,
+            'urlSaveUser' => View::generateUrl('usuario','save')
+        );
+
+        $this->render('create',$dataToRender);
     }
     
     public function edit()
