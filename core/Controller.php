@@ -9,7 +9,20 @@ abstract class Controller
     public function __construct($view)
     {
         $this->view = $view;
+        $this->loadModels();
+        $this->loadStrings();
+    }
 
+    private function loadStrings()
+    {
+        if (file_exists(PATH_VIEWS . PATH_HTTP_SEPARATOR . $this->view . PATH_HTTP_SEPARATOR . DEFAULT_STRINGS_FILE))
+        {
+            require_once PATH_VIEWS . PATH_HTTP_SEPARATOR . $this->view . PATH_HTTP_SEPARATOR . DEFAULT_STRINGS_FILE;
+        }
+    }
+
+    private function loadModels()
+    {
         foreach(glob(PATH_MODELS . "/*.php") as $file)
         {
             require_once $file;
@@ -23,12 +36,20 @@ abstract class Controller
             ${$key} = $value;
         }
 
-        require PATH_VIEWS . '/' . $this->view . '/' . $file . '.php';
+        require PATH_VIEWS . PATH_HTTP_SEPARATOR . $this->view . PATH_HTTP_SEPARATOR . $file . '.php';
     }
 
     public function redirect($controller,$action)
     {
         header("Location:index.php?controller=" . $controller . "&action=" . $action);
+    }
+
+    public function preventRefresh($controller,$action)
+    {
+        if (isset($_POST) && empty($_POST))
+        {
+            $this->redirect($controller,$action);
+        }
     }
 }
 

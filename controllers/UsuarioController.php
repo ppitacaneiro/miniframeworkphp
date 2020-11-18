@@ -27,6 +27,10 @@ class UsuarioController extends Controller implements Crud
         $dataToRender = array
         (
             'errors' => '',
+            'email' => View::setValueInputText('inputEmail'),
+            'usuario' => View::setValueInputText('inputNombre'),
+            'password1' => View::setValueInputText('inputPassword'),
+            'password2' => View::setValueInputText('inputPassword2'),
             'urlSaveUser' => View::generateUrl('usuario','save')
         );
 
@@ -35,45 +39,66 @@ class UsuarioController extends Controller implements Crud
     
     public function save()
     {
-        $usuario = new Usuario();
-        $usuario->user = $_POST['inputNombre'];
-        $usuario->email = $_POST['inputEmail'];
-        $usuario->password = $_POST['inputPassword'];
+        $this->preventRefresh('usuario','create');
 
-        $dataToValidate = array
-        (
+        $usuario = new Usuario();
+        $validator = new Validator();
+        $errors = array();
+
+        $usuario->user = View::sanitize($_POST['inputNombre']);
+        $usuario->email = View::sanitize($_POST['inputEmail']);
+        $usuario->password = View::sanitize($_POST['inputPassword']);
+        $passwordRepeat = View::sanitize($_POST['inputPassword2']);
+        
+        $dataToValidate = array(
             'email' => $usuario->email,
             'required' => $usuario->user,
             'password' => $usuario->password
         );
-
-        $errors = "";
-        $validator = new Validator();
         $validator->validate($dataToValidate);
 
-        if ($validator->isValid())
+        if ($validator->isValid()) 
         {
-            $data = array
-            (
-                'user' => $usuario->user,
-                'password' => password_hash($usuario->password,PASSWORD_DEFAULT),
-                'email' => $usuario->email
-            );
-    
-            $usuario->insert($data);
-        }
-        else
+            if (count($usuario->getByField('user',$usuario->user)) > 0)
+            {
+                array_push($errors,USER_EXISTS); 
+            }
+
+            if (count($usuario->getByField('email',$usuario->email)) > 0)
+            {
+                array_push($errors,EMAIL_EXISTS);
+            }
+
+            if ($passwordRepeat != $usuario->password)
+            {
+                array_push($errors,PASSWORD_NOT_EQUALS);
+            }
+
+            if (empty($errors))
+            {
+                $data = array(
+                    'user' => $usuario->user,
+                    'password' => password_hash($usuario->password, PASSWORD_DEFAULT),
+                    'email' => $usuario->email
+                );
+                $usuario->insert($data);
+            }
+        } 
+        else 
         {
-            $errors = $validator->printErrors();
+            $errors = array_merge($errors,$validator->getErrors()); 
         }
 
-        $dataToRender = array
-        (
+        $dataToRender = array(
             'errors' => $errors,
-            'urlSaveUser' => View::generateUrl('usuario','save')
+            'email' => View::setValueInputText('inputEmail'),
+            'usuario' => View::setValueInputText('inputNombre'),
+            'password1' => View::setValueInputText('inputPassword'),
+            'password2' => View::setValueInputText('inputPassword2'),
+            'urlSaveUser' => View::generateUrl('usuario', 'save')
         );
 
-        $this->render('create',$dataToRender);
+        $this->render('create', $dataToRender);
     }
     
     public function edit()

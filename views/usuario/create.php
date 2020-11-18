@@ -9,28 +9,35 @@
 <body>
     <div class="container mt-5">
         <h3>Creación de Usuario</h3>
-        <hr>
-        <?php if ($errors != "") { ?>
+        <?php var_dump($errors); ?>
+        <?php if (!empty($errors)) { ?>
         <div class="alert alert-danger" role="alert">
-            <?= $errors ?>
+            <ul>
+                <?php
+                    foreach ($errors as $error)
+                    {
+                        echo '<li>' . $error . '</li>';
+                    }
+                ?>
+            </ul>
         </div>
         <?php } ?>
         <form method="POST" action="<?= $urlSaveUser ?>">
             <div class="form-group">
                 <label for="inputEmail">Dirección de email</label>
-                <input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="name@example.com">
+                <input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="name@example.com" value="<?= $email ?>">
             </div>
             <div class="form-group">
                 <label for="inputNombre">Nombre de Usuario</label>
-                <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombre de usuario">
+                <input type="text" class="form-control" id="inputNombre" name="inputNombre" placeholder="Nombre de usuario" value="<?= $usuario ?>">
             </div>
             <div class="form-group">
                 <label for="inputPassword">Contraseña</label>
-                <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Contraseña">
+                <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Contraseña" value="<?= $password1 ?>">
             </div>
             <div class="form-group">
                 <label for="inputPassword2">Repetir Contraseña</label>
-                <input type="password" class="form-control" id="inputPassword2" name="inputPassword2" placeholder="Repetir Contraseña">
+                <input type="password" class="form-control" id="inputPassword2" name="inputPassword2" placeholder="Repetir Contraseña" value="<?= $password2 ?>">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Registrarse</button>

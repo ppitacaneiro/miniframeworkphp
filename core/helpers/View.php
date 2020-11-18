@@ -8,6 +8,19 @@ Class View
         
         return $urlString;
     }
+
+    public static function sanitize($input)
+    {
+        $inputSanitized = trim($input);
+        $inputSanitized = htmlspecialchars($inputSanitized);
+
+        return $inputSanitized;
+    }
+
+    public static function setValueInputText($nameInputText)
+    {
+        return (isset($_POST[$nameInputText])) ? $_POST[$nameInputText] : '';
+    }
 }
 
 ?>

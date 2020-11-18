@@ -53,7 +53,7 @@ abstract class Model extends Connection
         {
             $stm = $this->pdo->prepare("SELECT * FROM $this->table");
             $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
+            return $stm->fetch(PDO::FETCH_OBJ);
         }
         catch (PDOException $e)
         {
@@ -67,9 +67,23 @@ abstract class Model extends Connection
         {
             $stm = $this->pdo->prepare("SELECT * FROM $this->table WHERE $this->primaryKey = ?");
             $stm->execute(array($id));
-            return $stm->fetch(PDO::FETCH_OBJ);
+            return $stm->fetchAll(PDO::FETCH_OBJ);
         }
         catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+    }
+
+    public function getByField($field,$value)
+    {
+        try
+        {
+            $stm = $this->pdo->prepare("SELECT * FROM $this->table WHERE $field = ?");
+            $stm->execute(array($value));
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e)
         {
             die($e->getMessage());
         }
