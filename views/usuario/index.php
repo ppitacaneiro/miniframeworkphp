@@ -9,6 +9,16 @@
 </head>
 <body class="text-center">
     <div class="container w-25">
+        <?php
+        if (isset($message) && !empty($message))
+        {
+        ?>
+            <div class="alert alert-success" role="alert">
+                <?= $message; ?>
+            </div>
+        <?php
+        }
+        ?>
         <form>
             <label for="inputUsuario">Usuario</label>
             <input type="text" id="inputUsuario" class="form-control" placeholder="Usuario" required autofocus>

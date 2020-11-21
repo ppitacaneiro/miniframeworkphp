@@ -9,7 +9,11 @@
 <body>
     <div class="container mt-5">
         <h3>Creación de Usuario</h3>
-        <?php var_dump($errors); ?>
+        <?php if (!empty($success)) { ?>
+        <div class="alert alert-success" role="alert">
+            <?= $success; ?>
+        </div>
+        <?php } ?>
         <?php if (!empty($errors)) { ?>
         <div class="alert alert-danger" role="alert">
             <ul>

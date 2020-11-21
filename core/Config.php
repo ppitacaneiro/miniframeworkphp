@@ -1,5 +1,9 @@
 <?php
 
+// URL DOMAIN
+
+define("URL_DOMAIN","http://localhost:8080/miniframeworkphp/");
+
 // DATABASE 
 
 define("DRIVER_DATABASE","mysql");
@@ -27,6 +31,14 @@ define("PATH_MODELS","models");
 define("VALIDATOR_EMAIL","La dirección de correo electrónica no es válida");
 define("VALIDATOR_REQUIRED","Campo obligatorio no cumplimentado");
 define("VALIDATOR_PASSWORD","La contraseña debe ser de 8 caracteres como mínimo. Debe contener una mayúscula, una minúscula y un número");
+
+// SEND MAILS
+
+define("HOST_SMTP","smtp.hostinger.es");
+define("USER_SMTP","pablopita@pablopita.es");
+define("PASSWORD_SMTP","[r]T4Gp6I");
+define("PORT_SMTP","587");
+define("MAIL_FROM","pablopita@pablopita.es");
 
 
 ?>

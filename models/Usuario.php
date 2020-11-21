@@ -9,6 +9,8 @@ class Usuario extends Model
     private $password;
     private $email;
     private $registerDate;
+    private $activated;
+    private $activatedToken;
     
     const TABLE = 'users';
     const PRIMARY_KEY = 'id';
