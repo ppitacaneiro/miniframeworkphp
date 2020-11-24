@@ -17,10 +17,73 @@ class UsuarioController extends Controller implements Crud
     {
         $dataToRenderInView = array
         (
-            'urlCreateUser' => View::generateUrl('usuario','create')
+            'urlCreateUser' => View::generateUrl('usuario','create'),
+            'urlLoginUser' => View::generateUrl('usuario','login')
         );
 
         $this->render('index',$dataToRenderInView);
+    }
+
+    public function login()
+    {
+        $this->preventRefresh('usuario','index');
+
+        $usuario = new Usuario();
+        $validator = new Validator();
+        $errors = array();
+
+        $user = View::sanitize($_POST['inputUsuario']);
+        $password = View::sanitize($_POST['inputPassword']);
+
+        $dataToValidate = array(
+            'required' => $user,
+            'password' => $password
+        );
+        $validator->validate($dataToValidate);
+
+        if ($validator->isValid())
+        {
+            $row = $usuario->getByField('user',$user);
+
+            if (!empty($row))
+            {
+                $usuario->password = $row[0]->password;
+                $usuario->activated = $row[0]->activated;
+
+                if (!password_verify($password,$usuario->password))
+                {
+                    array_push($errors,PASSWORD_INCORRECT);
+                }
+                else if ($usuario->activated == 0)
+                {
+                    array_push($errors,ACCOUNT_NOT_ACTIVATED);
+                }
+            }
+            else
+            {
+                array_push($errors,USER_NOT_REGISTERED);
+            }
+        }
+        else
+        {
+            $errors = $validator->getErrors(); 
+        }
+
+        if (empty($errors)) 
+        {
+            echo 'User Logged!';
+            die();
+        }
+        else
+        {
+            $dataToRender = array
+            (
+                'errors' => $errors,
+                'urlLoginUser' => View::generateUrl('usuario','login'),
+                'urlCreateUser' => View::generateUrl('usuario','create')
+            );
+            $this->render('index', $dataToRender);
+        }
     }
     
     public function create()

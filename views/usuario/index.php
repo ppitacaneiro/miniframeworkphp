@@ -18,12 +18,27 @@
             </div>
         <?php
         }
+        if (isset($errors) && !empty($errors))
+        {
         ?>
-        <form>
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                <?php 
+                    foreach ($errors as $error) 
+                    {
+                        echo '<li>' . $error . '</li>';
+                    }
+                ?>
+                </ul>
+            </div>
+        <?php
+        }
+        ?>
+        <form method="POST" action="<?= $urlLoginUser ?>">
             <label for="inputUsuario">Usuario</label>
-            <input type="text" id="inputUsuario" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="text" id="inputUsuario" name="inputUsuario" class="form-control" placeholder="Usuario" required autofocus>
             <label for="inputPassword">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
             <div class="checkbox mb-3">
                 <label>
                     <a href="<?= $urlCreateUser ?>">Registro de usuario</a>
