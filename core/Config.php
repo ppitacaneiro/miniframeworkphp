@@ -35,11 +35,11 @@ define("VALIDATOR_PASSWORD","La contraseña debe ser de 8 caracteres como mínim
 
 // SEND MAILS
 
-define("HOST_SMTP","smtp.hostinger.es");
-define("USER_SMTP","pablopita@pablopita.es");
-define("PASSWORD_SMTP","[r]T4Gp6I");
-define("PORT_SMTP","587");
-define("MAIL_FROM","pablopita@pablopita.es");
+define("HOST_SMTP","*******************");
+define("USER_SMTP","*****************");
+define("PASSWORD_SMTP","***********");
+define("PORT_SMTP","***");
+define("MAIL_FROM","*******************");
 
 
 ?>
