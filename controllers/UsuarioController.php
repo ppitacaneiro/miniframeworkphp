@@ -158,13 +158,15 @@ class UsuarioController extends Controller implements Crud
     private function sendConfirmationActivateUserAccount($usuario,$token)
     {
         $activationLink = URL_DOMAIN . View::generateUrl('usuario','activate') . "&token=" . $token;
-        
-        $body = "
-            <p>Hola " . $usuario->user . "</p>
-            <p>Pulsa <a href=\"$activationLink\">aquí</a> para verificar tu cuenta de correo.</p>
-        ";
+        $mail = new Mail($usuario->email,SUBJECT_ACCOUNT_EMAIL_VERIFICATION);
+        $data = array
+        (
+            '{usuario}' => $usuario->user,
+            '{link}' => $activationLink
+        );
+        $body = $mail->loadTemplateEmail($data,'confirmationAccount.html');
+        $mail->body = $body;
 
-        $mail = new Mail($usuario->email,SUBJECT_ACCOUNT_EMAIL_VERIFICATION,$body);
         return $mail->send();
     }
 

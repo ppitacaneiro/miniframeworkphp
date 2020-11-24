@@ -25,6 +25,7 @@ define("PATH_HTTP_SEPARATOR","/");
 define("PATH_CONTROLLERS","controllers");
 define("PATH_VIEWS","views");
 define("PATH_MODELS","models");
+define("PATH_HTML_TEMPLATES","templates");
 
 // VALIDATORS
 

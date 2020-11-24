@@ -10,11 +10,10 @@ class Mail {
     private $subject;
     private $body;
 
-    public function __construct($address,$subject,$body)
+    public function __construct($address,$subject)
     {
         $this->address = $address;
         $this->subject = $subject;
-        $this->body = $body;
     }
 
     public function __set($name,$value) 
@@ -51,6 +50,24 @@ class Mail {
         {
             die($e->getMessage());
         }
+    }
+
+    public function loadTemplateEmail($data,$template)
+    {
+        $patterns = array();
+        $replacements = array();
+
+        foreach ($data as $pattern => $value)
+        {
+            array_push($patterns,$pattern);
+            array_push($replacements,$value);
+        }
+
+        $file = URL_DOMAIN . PATH_VIEWS . PATH_HTTP_SEPARATOR . PATH_HTML_TEMPLATES . PATH_HTTP_SEPARATOR . $template;
+        $content = file_get_contents($file);
+        $content = str_replace($patterns, $replacements, $content);
+        
+        return $content;
     }
 }
 
