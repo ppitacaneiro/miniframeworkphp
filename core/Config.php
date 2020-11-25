@@ -15,7 +15,7 @@ define("HOST","localhost");
 
 // DEFAULTS
 
-define("DEFAULT_CONTROLLER","usuario");
+define("DEFAULT_CONTROLLER","UsuarioController");
 define("DEFAULT_ACTION","index");
 define("DEFAULT_STRINGS_FILE","strings.php");
 

@@ -15,13 +15,7 @@ class UsuarioController extends Controller implements Crud
 
     public function index()
     {
-        $dataToRenderInView = array
-        (
-            'urlCreateUser' => View::generateUrl('usuario','create'),
-            'urlLoginUser' => View::generateUrl('usuario','login')
-        );
-
-        $this->render('index',$dataToRenderInView);
+        $this->renderLoginForm();
     }
 
     public function login()
@@ -71,19 +65,37 @@ class UsuarioController extends Controller implements Crud
 
         if (empty($errors)) 
         {
-            echo 'User Logged!';
-            die();
+            $usuario->setSesssionVar('authenticated',true);
+            $this->redirect('usuarios','logged');
         }
         else
         {
-            $dataToRender = array
-            (
-                'errors' => $errors,
-                'urlLoginUser' => View::generateUrl('usuario','login'),
-                'urlCreateUser' => View::generateUrl('usuario','create')
-            );
-            $this->render('index', $dataToRender);
+            $this->renderLoginForm($errors);
         }
+    }
+
+    public function logged()
+    {
+        $usuario = new Usuario();
+
+        if ($usuario->isUserAuthenticated()) 
+        {
+            $dataToRender = array(
+                'urlLogout' => View::generateUrl('usuario', 'logout'),
+            );
+
+            $this->render('logged', $dataToRender);
+        } 
+        else 
+        {
+            $this->renderLoginForm();
+        }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        $this->renderLoginForm();
     }
     
     public function create()
@@ -216,6 +228,18 @@ class UsuarioController extends Controller implements Crud
                 }
             }
         }
+    }
+
+    private function renderLoginForm($errors = array())
+    {
+        $dataToRender = array
+        (
+            'errors' => $errors,
+            'urlLoginUser' => View::generateUrl('usuario','login'),
+            'urlCreateUser' => View::generateUrl('usuario','create')
+        );
+
+        $this->render('index', $dataToRender);
     }
 
     private function sendConfirmationActivateUserAccount($usuario,$token)

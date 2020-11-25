@@ -41,7 +41,8 @@
             <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
             <div class="checkbox mb-3">
                 <label>
-                    <a href="<?= $urlCreateUser ?>">Registro de usuario</a>
+                    <div><a href="<?= $urlCreateUser ?>">Registro de usuario</a></div>
+                    <div><a href="#">¿Olvidaste tu contraseña?</a></div>
                 </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>

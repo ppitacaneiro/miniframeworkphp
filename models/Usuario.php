@@ -31,6 +31,25 @@ class Usuario extends Model
     {
         return $this->$name;
     }
+
+    public function setSesssionVar($key,$value)
+    {
+        $_SESSION[$key] = $value;
+    }
+
+    public function getSessionVar($key)
+    {
+        if (isset($_SESSION[$key]))
+        {
+            return $_SESSION[$key];
+        }
+        return false;
+    }
+
+    public function isUserAuthenticated()
+    {
+        return $this->getSessionVar('authenticated');
+    }
 }
 
 ?>

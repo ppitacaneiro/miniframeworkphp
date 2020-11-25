@@ -37,6 +37,7 @@ function getController($controller)
     if (!is_file($fileController))
     {
         $fileController = PATH_CONTROLLERS . '/' . DEFAULT_CONTROLLER . '.php';
+        $controller = DEFAULT_CONTROLLER;
     }
 
     require_once($fileController);
